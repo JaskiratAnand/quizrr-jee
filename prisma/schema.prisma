@@ -1,0 +1,88 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  purchases Purchase[]
+  testResults TestResult[]
+}
+
+model TestSeries {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  purchases   Purchase[]
+  tests       Test[]
+  createdAt   DateTime @default(now())
+}
+
+model Test {
+  id          String   @id @default(uuid())
+  title       String
+  instructions String?
+  questions   Question[]
+  testSeries  TestSeries @relation(fields: [testSeriesId], references: [id])
+  testSeriesId String
+  createdAt   DateTime @default(now())
+  testResults TestResult[]
+}
+
+enum QuestionType {
+  MCQ
+  FillInTheBlanks
+  TrueOrFalse
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  qtitle      String
+  imgLink     String?
+  options     String[]
+  correctAns  String
+  type        QuestionType
+  instructions String?
+  explaination String?
+  test        Test @relation(fields: [testId], references: [id])
+  testId      String
+  createdAt   DateTime @default(now())
+}
+
+model Purchase {
+  id          String   @id @default(uuid())
+  user        User @relation(fields: [userId], references: [id])
+  userId      String
+  testSeries  TestSeries @relation(fields: [testSeriesId], references: [id])
+  testSeriesId String
+  createdAt   DateTime @default(now())
+}
+
+model TestResult {
+  id          String   @id @default(uuid())
+  user        User  @relation(fields: [userId], references: [id])
+  userId      String
+  test        Test  @relation(fields: [testId], references: [id])
+  testId      String
+  result      Float?
+  answers     Answers[]
+  attemptDate   DateTime @default(now())
+}
+
+model Answers {
+  id         String   @id @default(uuid())
+  questionId String
+  answer     String
+  testResult TestResult @relation(fields: [testResultId], references: [id])
+  testResultId String
+  correct    Boolean @default(false) 
+}
