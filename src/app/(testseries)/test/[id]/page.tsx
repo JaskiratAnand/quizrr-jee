@@ -1,5 +1,6 @@
 import TestHeader from "@/components/TestHeader";
 import prisma from "@/db";
+import { memo } from "react";
 
 interface TestDesc {
     title: string,
@@ -12,7 +13,7 @@ interface TestDesc {
 
 const gettest = async (id: string) => {
     const test: TestDesc | null = await prisma.test.findFirst({
-        where: { id: id },
+        where: { id },
         select: {
             title: true,
             createdAt: true,
@@ -25,17 +26,14 @@ const gettest = async (id: string) => {
         }
     })
 
-    if (!test) {
-        return null;
-    }
-    return test;
+    return test || null;
 }
 
-const Instructions = ({ instructions }: {
+const Instructions = memo(({ instructions }: {
     instructions: string
 }) => {
     return <>
-        <div className="mt-4 p-6 border rounded-xl border-neutral-400 items-center bg-neutral-900">
+        <div className="mt-4 p-6 mx-4 border rounded-xl border-neutral-400 items-center bg-neutral-900">
             <h1 className="text-lg  p-2 font-medium">
                 Important Instructions
             </h1>
@@ -51,7 +49,8 @@ const Instructions = ({ instructions }: {
             </div>
         </div>
     </>
-}
+});
+Instructions.displayName = "Instructions";
 
 function timeFormater (date: Date): string {
     const options: Intl.DateTimeFormatOptions = { 

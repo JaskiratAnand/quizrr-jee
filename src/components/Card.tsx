@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import Button from "./Button";
+import { memo } from "react";
 
-export default function Card ({
+const Card = memo(({
     title, 
     description, 
     imageLink, 
@@ -16,7 +17,7 @@ export default function Card ({
     purchasedOn?: string;
     buttonTitle?: string;
     onClick?: () => void;
-}) {
+}) => {
     return (
         <div className="max-w-sm rounded-lg shadow">
             <div>
@@ -34,4 +35,7 @@ export default function Card ({
             </div>
         </div>
     )
-}
+});
+Card.displayName = "Card";
+
+export default Card;

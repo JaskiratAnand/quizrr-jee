@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image"
 import Button from "./Button"
-import { useState } from "react"
-
+import { memo, useCallback, useState } from "react"
 import { submitAttempt } from "@/lib/actions/submitAttempt";
+import { useRouter } from "next/navigation";
 
-const MCQOptions = ({ options, selectedOption, handleOptionChange }: {
+const MCQOptions = memo(({ options, selectedOption, handleOptionChange }: {
     options: string[],
     selectedOption: string | null,
     handleOptionChange: (answer: string) => void
@@ -28,9 +28,10 @@ const MCQOptions = ({ options, selectedOption, handleOptionChange }: {
             </div>
         })}
     </>
-}
+});
+MCQOptions.displayName = "MCQOptions";
 
-const TrueOrFalseOptions = ({ selectedOption, handleOptionChange }: {
+const TrueOrFalseOptions = memo(({ selectedOption, handleOptionChange }: {
     selectedOption: string | null,
     handleOptionChange: (option: string) => void
 }) => {
@@ -62,9 +63,10 @@ const TrueOrFalseOptions = ({ selectedOption, handleOptionChange }: {
             </div>
         </div>
     </>
-}
+});
+TrueOrFalseOptions.displayName = "TrueOrFalseOptions";
 
-const TextInput = ({ answer, setAnswer }: {
+const TextInput = memo(({ answer, setAnswer }: {
     answer: string, 
     setAnswer: (value: string) => void 
 }) => {
@@ -78,7 +80,8 @@ const TextInput = ({ answer, setAnswer }: {
             required 
         />
     </div>
-}
+});
+TextInput.displayName = "TextInput";
 
 export default function TestView({ questions, testId }: {
     questions: {
@@ -92,19 +95,34 @@ export default function TestView({ questions, testId }: {
     testId: string
 }) {
     const [answers, setAnswers] = useState<{ [key: string]: string }>({});
-
+    const router = useRouter();
     const handleOptionChange = (questionId: string, answer: string) => {
-        setAnswers(prevAnswers => ({
-            ...prevAnswers,
-            [questionId]: answer
-        }));
+        setAnswers(
+            prevAnswers => ({
+                ...prevAnswers,
+                [questionId]: answer
+            })
+        );
     }
+
+    const handleSubmit = useCallback(async (
+        answers: { [key: string]: string },
+        testId: string
+    ) => {
+        const answer_list = [];
+        for (const [questionId, answer] of Object.entries(answers)) {
+            answer_list.push({questionId, answer: answer.toString()});
+        }
+
+        await submitAttempt(answer_list, testId);
+        router.push('/results');
+    }, [router]);
 
 
     return <>
         <div className="p-6">
             <div>{questions.map((question, idx) => {
-                return <div key={question.id} className="w-full mx-2 my-5 p-5 bg-neutral-900 rounded-lg border">
+                return <div key={question.id} className="w-full mx-auto my-5 p-5 bg-neutral-900 rounded-lg border">
                     <h1 className="text-xl pb-2">Que {idx + 1}. {question.qtitle}</h1>
 
                     {question.imgLink &&
@@ -141,15 +159,11 @@ export default function TestView({ questions, testId }: {
 
         <footer>
             <div className="px-6">
-                <Button title="Submit Test" className="mx-2" onClick={async () => {
-                    const answer_list = [];
-                    for (const [questionId, answer] of Object.entries(answers)) {
-                        answer_list.push({questionId, answer: answer.toString()});
-                    }
-
-                    await submitAttempt(answer_list, testId);
-                    window.location.href = "/home";
-                }} />
+                <Button 
+                    title="Submit Test" 
+                    className="mx-auto" 
+                    onClick={async () => handleSubmit(answers, testId)} 
+                />
             </div>
         </footer>
     </>

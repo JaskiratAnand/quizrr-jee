@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth";
 import prisma from "@/db/index";
 import YourPurchases from '@/components/YourPurchases';
 import OtherSeries from '@/components/OtherSeries';
-import useTimeFormat from '@/lib/hooks/useTimeFormat';
 
 interface PurchasedTestSeries {
     purchases: {
@@ -21,7 +20,7 @@ interface Purchases {
     id: string,
     title: string,
     description: string,
-    createdAt: string
+    createdAt: Date
 }
 
 const getGreeting = () => {
@@ -64,7 +63,7 @@ const getPurchasedTestSeries = async () => {
         id: p.testSeries.id,
         title: p.testSeries.title,
         description: p.testSeries.description,
-        createdAt: useTimeFormat(p.createdAt) 
+        createdAt: p.createdAt 
     }));
 
     return purchases;
@@ -79,9 +78,7 @@ export default async function Home () {
     const session = await getServerSession(authOptions);
     const name = session?.user?.name;
     const greeting = getGreeting();
-    const purchases = await getPurchasedTestSeries();
-    const testSeries = await getTestSeries();
-
+    const [purchases, testSeries] = await Promise.all([getPurchasedTestSeries(), getTestSeries()]);
     const filteredTestSeries = testSeries.filter(ts => !purchases.find(p => p.id === ts.id));
 
     return <div className='p-5'>

@@ -5,11 +5,16 @@ import Image from "next/image";
 import quizrrImage from './img/quizrr.png';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
+import { memo, useCallback } from 'react';
 
-export default function Hero() {
+const Hero = memo(() => {
     const router = useRouter();
     const session = useSession();
     const user = session.data?.user;
+
+    const handleHome = useCallback(() => {
+        router.push("/home");
+    }, [router]);
 
   return (
     <div className="relative isolation-auto px-6 pt-14 lg:px-8">
@@ -41,7 +46,7 @@ export default function Hero() {
                     Crack upcoming IIT JEE Main & Advanced and other competitive exams with test series designed according to latest pattern of exams!
                 </p>
                 <div className="mt-10 flex items-center justify-center">
-                    {user && <Button title='Go to Home page' className={"w-48"} onClick={() => {router.push("/home")}} />}
+                    {user && <Button title='Go to Home page' className={"w-48"} onClick={() => handleHome()} />}
                 </div>
             </div>
         </div>
@@ -60,4 +65,7 @@ export default function Hero() {
         </div>
     </div>
   )
-}
+});
+Hero.displayName = 'Hero';
+
+export default Hero;

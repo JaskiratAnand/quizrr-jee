@@ -1,14 +1,23 @@
 "use client";
 import { createPurchase } from '@/lib/actions/createPurchase';
 import Card from './Card'
+import { memo, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function OtherSeries({ testSeries }: {
+const OtherSeries = memo(({ testSeries }: {
     testSeries: {
         id: string;
         title: string;
         description: string | null;
     }[]
-}) {
+}) => {
+    const router = useRouter();
+
+    const handlePurchase = useCallback(async (id: string) => {
+        await createPurchase(id);
+        router.push('/home')
+    }, [router]);
+
     if (testSeries.length === 0) {
         return (
             <div className='mt-5 pt-5 px-3'>
@@ -31,17 +40,17 @@ export default function OtherSeries({ testSeries }: {
                 {testSeries.map(p => (
                     <div key={p.id} className='m-2 min-w-72 w-72 px-3 py-5 border border-neutral-400 bg-neutral-900 rounded-lg'>
                         <Card 
-                            title={p.title? p.title: ""} 
-                            description={p.description? p.description: ""}
+                            title={p.title || ""} 
+                            description={p.description || ""}
                             buttonTitle='Unlock Series'
-                            onClick={async () => {
-                                await createPurchase(p.id);
-                                window.location.href = "/home";
-                            }}
+                            onClick={async () => handlePurchase(p.id)}
                         />
                     </div>
                 ))}
             </div>
         </div>
     )
-}
+});
+OtherSeries.displayName = 'OtherSeries';
+
+export default OtherSeries;

@@ -1,12 +1,10 @@
+import { memo } from "react"
 
-
-export default async function ProfileCard ({name, email, createdOn}: {
+const ProfileCard = memo(({name, email, createdOn}: {
     name: string;
     email: string;
     createdOn: string;
-}) {
-    
-
+}) => {
     return (
         <section className="flex font-medium items-center justify-center h-[90vh]">
             <section className="w-96 mx-auto bg-[#202020] bg-opacity-60 rounded-2xl px-8 py-12 shadow-lg backdrop-blur">
@@ -22,4 +20,7 @@ export default async function ProfileCard ({name, email, createdOn}: {
             </section>
         </section>
     )
-}
+});
+ProfileCard.displayName = "ProfileCard";
+
+export default ProfileCard;

@@ -12,7 +12,7 @@ export default function Navbar() {
                         Quizrr<span className="text-blue-500">JEE</span>
                     </span>
                 </div>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                <div className="lg:flex lg:flex-1 lg:justify-end">
                     <AuthButton />
                 </div>
             </nav>

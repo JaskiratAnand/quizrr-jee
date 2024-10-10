@@ -1,11 +1,11 @@
 "use client"
-import React from "react"
+import React, { memo } from "react"
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function AuthButton({ className }: { 
+const AuthButton = memo(({ className }: { 
     className?: string
-}) {
+}) => {
     const session = useSession();
     const router = useRouter();
     const user = session.data?.user;
@@ -24,4 +24,7 @@ export default function AuthButton({ className }: {
             {user ? "Logout" : "Login"}
         </button>
     </>
-}
+});
+AuthButton.displayName = "AuthButton";
+
+export default AuthButton;

@@ -1,5 +1,6 @@
 import TestView from "@/components/TestView";
 import prisma from "@/db";
+import { memo } from "react";
 
 interface Test {
     title: string,
@@ -39,14 +40,15 @@ const gettest = async (id: string) => {
     return test;
 }
 
-const Header = ({ title }: {
+const Header = memo(({ title }: {
     title: string
 }) => {
     return <header className="text-2xl font-medium">
         <h1 className="p-6">Test: <span className="text-3xl text-blue-500">{title}</span></h1>
         <hr />
     </header>
-}
+});
+Header.displayName = "Header";
 
 export default async function Test({ params }: {
     params: { id: string }

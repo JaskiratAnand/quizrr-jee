@@ -1,5 +1,6 @@
 import TestsList from "@/components/TestsList";
 import prisma from "@/db";
+import { memo } from "react";
 
 interface TestSeries {
     title: string,
@@ -40,7 +41,7 @@ const testSeriesDesc = async (testId: string) => {
     return seriesDesc;
 }
 
-const Heading = ({title, description}: {
+const Heading = memo(({title, description}: {
     title: string,
     description: string | null
 }) => {
@@ -48,7 +49,8 @@ const Heading = ({title, description}: {
         <h1 className="text-4xl font-medium text-blue-500 py-5">{title}</h1>
         {description && <p className="text-lg">{description}</p>}
     </header>
-}
+});
+Heading.displayName = "Heading";
 
 export default async function TestSeries ({ params }: {
     params: { id: string } 
