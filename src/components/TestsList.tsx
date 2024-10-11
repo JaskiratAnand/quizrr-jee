@@ -1,6 +1,6 @@
 "use client";
 import { memo, useCallback } from "react";
-import Button from "./Button";
+import Button from "./ui/Button";
 import { useRouter } from "next/navigation";
 
 const TestsList = memo(({tests}: {

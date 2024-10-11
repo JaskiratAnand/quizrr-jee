@@ -1,6 +1,6 @@
 "use client";
 import { createPurchase } from '@/lib/actions/createPurchase';
-import Card from './Card'
+import Card from '@/components/ui/Card';
 import { memo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 

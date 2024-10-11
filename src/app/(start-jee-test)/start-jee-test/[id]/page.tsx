@@ -1,6 +1,7 @@
-import TestView from "@/components/TestView";
+import JEETestView from "@/components/JEETestView";
 import prisma from "@/db";
-import { memo } from "react";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
 interface Test {
     title: string,
@@ -40,19 +41,13 @@ const gettest = async (id: string) => {
     return test;
 }
 
-const Header = memo(({ title }: {
-    title: string
-}) => {
-    return <header className="text-2xl font-medium">
-        <h1 className="p-6">Test: <span className="text-3xl text-blue-500">{title}</span></h1>
-        <hr />
-    </header>
-});
-Header.displayName = "Header";
-
-export default async function StartTest({ params }: {
+export default async function StartJEETest({ params }: {
     params: { id: string }
 }) {
+    const session = await getServerSession(authOptions);
+    const name = session?.user?.name;
+    const email = session?.user?.email;
+
     const test = await gettest(params.id);
     if (!test) {
         return <div>Test not found</div>
@@ -60,10 +55,6 @@ export default async function StartTest({ params }: {
     const questions = test.questions;
 
     return <>
-        <div className="max-w-screen-xl mx-auto">
-            <Header title={test.title} />
-
-            <TestView questions={questions} testId={params.id} />
-        </div>
+        <JEETestView user={{name, email}} questions={questions} testId={params.id} />
     </>
 }

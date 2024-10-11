@@ -1,6 +1,6 @@
 "use client"
 import { memo, useCallback } from "react";
-import Button from "./Button"
+import Button from "./ui/Button"
 import { useRouter } from "next/navigation";
 
 const TestHeader = memo(({ id, title, createdAt, questionCount }: {
@@ -13,6 +13,10 @@ const TestHeader = memo(({ id, title, createdAt, questionCount }: {
 
     const handleStartTest = useCallback((id: string) => {
         router.push(`/start-test/${id}`);
+    }, [router]);
+
+    const handleStartJEETest = useCallback((id: string) => {
+        router.push(`/start-jee-test/${id}`);
     }, [router]);
 
     return <> 
@@ -30,6 +34,7 @@ const TestHeader = memo(({ id, title, createdAt, questionCount }: {
             </div>
             <div className="p-2 mt-4">
                 <Button title={"Start Test"} onClick={() => handleStartTest(id)} />
+                <Button title={"Start Test JEE Format (unfinished)"} onClick={() => handleStartJEETest(id)} />
             </div>
         </header>
     </>

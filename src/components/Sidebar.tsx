@@ -1,6 +1,6 @@
 import React from "react"
 import SideItem from "./SideItem"
-import AuthButton from "./AuthButton"
+import AuthButton from "./ui/AuthButton"
 
 export default function Sidebar({ children }: {
     children: React.ReactNode

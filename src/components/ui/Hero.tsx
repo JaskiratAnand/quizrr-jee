@@ -2,7 +2,7 @@
 
 import Button from './Button';
 import Image from "next/image";
-import quizrrImage from './img/quizrr.png';
+import quizrrImage from '../img/quizrr.png';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { memo, useCallback } from 'react';

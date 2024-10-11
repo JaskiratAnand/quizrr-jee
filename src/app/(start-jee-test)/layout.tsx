@@ -1,12 +1,10 @@
-import Navbar from "@/components/ui/Navbar";
 
 export default function Layout ({ children }: {
     children: React.ReactNode;
 }) {
-  return <>
-        <Navbar />
+  return <div className='max-w-full bg-white text-black px-5 overflow-hidden'>
         <div>
             { children }
         </div>
-    </>
+    </div>
 }
