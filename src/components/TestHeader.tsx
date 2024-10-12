@@ -36,6 +36,7 @@ const TestHeader = memo(({ id, title, createdAt, questionCount }: {
                 <Button title={"Start Test"} onClick={() => handleStartTest(id)} />
                 <Button title={"Start Test JEE Format (unfinished)"} onClick={() => handleStartJEETest(id)} />
             </div>
+            <div className="py-2 px-4 text-sm">** use desktop for JEE format test</div>
         </header>
     </>
 });

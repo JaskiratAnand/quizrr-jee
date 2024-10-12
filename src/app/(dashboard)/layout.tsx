@@ -1,14 +1,14 @@
 import React from "react";
-import Sidebar from "@/components/Sidebar";
+import SidebarLayout from "@/components/SidebarLayout";
 
 export default function Layout({ children }: {
     children: React.ReactNode;
 }) {
     return (
         <>
-            <Sidebar>
+            <SidebarLayout>
                 {children}
-            </Sidebar>
+            </SidebarLayout>
         </>
     )
 }

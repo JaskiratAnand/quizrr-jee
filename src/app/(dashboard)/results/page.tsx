@@ -48,7 +48,7 @@ const getResults = async () => {
 export default async function Results () {
     const results = await getResults();
 
-    return <div className="p-5">
+    return <div className="p-2 lg:pl-5">
         <header>
             <h1 className="my-5 text-3xl font-medium">My past test <span className='text-blue-500'>results</span></h1>
         </header>

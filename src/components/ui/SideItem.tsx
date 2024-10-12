@@ -1,11 +1,12 @@
 "use client"
 import { usePathname, useRouter } from "next/navigation"
+import { memo } from "react";
 
-export default function SideItem ({ href, title, icon }: {
+const SideItem =  memo(({ href, title, icon }: {
     href: string;
     title?: string;
     icon?: React.ReactNode;
-}) {
+}) => {
     const router = useRouter();
     const pathname = usePathname();
     const selected = pathname === href;
@@ -25,4 +26,7 @@ export default function SideItem ({ href, title, icon }: {
             </div>
         </div>
     )
-}
+});
+SideItem.displayName = "SideItem";
+
+export default SideItem;

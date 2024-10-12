@@ -81,7 +81,7 @@ export default async function Home () {
     const [purchases, testSeries] = await Promise.all([getPurchasedTestSeries(), getTestSeries()]);
     const filteredTestSeries = testSeries.filter(ts => !purchases.find(p => p.id === ts.id));
 
-    return <div className='p-5'>
+    return <div className='p-2 lg:pl-5'>
         <div className='my-5 text-3xl font-medium'>
             {greeting}, <span className='text-blue-500'>{name}</span>
         </div>
