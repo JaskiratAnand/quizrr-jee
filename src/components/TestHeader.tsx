@@ -32,7 +32,7 @@ const TestHeader = memo(({ id, title, createdAt, questionCount }: {
                     Question(s): {questionCount}
                 </p>
             </div>
-            <div className="p-2 mt-4">
+            <div className="p-2 mt-4 flex flex-col gap-2 sm:flex-row sm:gap-0">
                 <Button title={"Start Test"} onClick={() => handleStartTest(id)} />
                 <Button title={"Start Test JEE Format (unfinished)"} onClick={() => handleStartJEETest(id)} />
             </div>

@@ -23,8 +23,8 @@ const TestsList = memo(({tests}: {
             <div className="text-2xl font-medium">Tests</div>
             <div className="pt-2">
                 {tests.map(test => (
-                    <div key={test.id} className="py-4 px-10 m-2 mx-auto font-medium text-lg flex flex-row items-center justify-between w-full border border-neutral-400 rounded-lg gap-6 bg-neutral-900 hover:bg-blue-500 hover:font-bold">
-                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 items-center">
+                    <div key={test.id} className="py-4 px-5 sm:px-10 m-2 mx-auto font-medium text-lg flex flex-row items-center justify-between w-full border border-neutral-400 rounded-lg gap-6 bg-neutral-900 hover:bg-blue-500 hover:font-bold">
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 sm:items-center">
                             <div>{test.title}</div>
                             <div className="text-sm">{test._count.questions} Question(s)</div>
                         </div>

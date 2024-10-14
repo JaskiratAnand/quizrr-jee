@@ -25,10 +25,10 @@ const Card = memo(({
             </div>
             <div className="p-5 pb-0">
                 <>
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-blue-400">{title}</h5>
+                    <h1 className="mb-2 text-2xl font-bold text-blue-400">{title}</h1>
+                    <p className="mb-3 font-normal">{description}</p>
+                    {purchasedOn && <p className="mb-2 text-sm">Purchased On: {purchasedOn}</p>}
                 </>
-                <p className="mb-3 font-normal">{description}</p>
-                {purchasedOn && <p className="mb-2 text-sm">Purchased On: {purchasedOn}</p>}
                 <div className="pt-2 pb-4">
                     {buttonTitle && <Button title={buttonTitle} onClick={onClick} />}
                 </div>
