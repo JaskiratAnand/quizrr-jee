@@ -29,6 +29,12 @@ const QuestionButtons = memo(({idx, setNavigateQue, questionsLength}: {
                             navButton.style.backgroundColor = "#16a34a";
                             navButton.style.color = "white";
                             navButton.style.borderColor = "#16a34a";
+                            navButton.style.borderRadius = "0%";
+
+                            const existingIndicator = document.getElementById(`indicator-${idx}`);
+                            if (existingIndicator) {
+                                navButton.removeChild(existingIndicator);
+                            }
                         }
                         if (idx < questionsLength - 1) {
                             setNavigateQue(idx + 1)
@@ -45,6 +51,11 @@ const QuestionButtons = memo(({idx, setNavigateQue, questionsLength}: {
                             navButton.style.color = "black";
                             navButton.style.borderColor = "black";
                             navButton.style.borderRadius = "0%";
+
+                            const existingIndicator = document.getElementById(`indicator-${idx}`);
+                            if (existingIndicator) {
+                                navButton.removeChild(existingIndicator);
+                            }
                         }
                     }}
                 />
@@ -59,10 +70,11 @@ const QuestionButtons = memo(({idx, setNavigateQue, questionsLength}: {
                             navButton.style.borderColor = "#9333ea";
                             navButton.style.borderRadius = "50%";
 
-                            const existingIndicator = navButton.querySelector('.indicator');
+                            const existingIndicator = document.getElementById(`indicator-${idx}`);
 
                             if (!existingIndicator) {
                                 const indicator = document.createElement('div');
+                                indicator.id = "indicator-" + idx;
                                 indicator.classList.add("absolute", "h-4", "w-4", "bg-green-600", "-bottom-1", "-right-1", "rounded-full");
 
                                 navButton.appendChild(indicator);
@@ -80,6 +92,11 @@ const QuestionButtons = memo(({idx, setNavigateQue, questionsLength}: {
                             navButton.style.color = "white";
                             navButton.style.borderColor = "#9333ea";
                             navButton.style.borderRadius = "50%";
+
+                            const existingIndicator = document.getElementById(`indicator-${idx}`);
+                            if (existingIndicator) {
+                                navButton.removeChild(existingIndicator);
+                            }
                         }
                         if (idx < questionsLength - 1) {
                             setNavigateQue(idx + 1)

@@ -17,7 +17,7 @@ const NavigateButtons = memo(({setNavigateQue, questionsLength}: {
                             key={idx + 1}
                             id={"nav-" + (idx).toString()}
                             title={(idx + 1).toString()}
-                            className="h-10 w-10 m-1 border-2 border-black flex justify-center items-center rounded-sm hover:bg-neutral-200"
+                            className="relative h-10 w-10 m-1 border-2 border-black flex justify-center items-center rounded-sm hover:bg-neutral-200"
                             onClick={() => setNavigateQue(idx)}
                         />
                     </>
