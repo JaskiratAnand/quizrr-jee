@@ -15,7 +15,7 @@ const NavigateButtons = memo(({setNavigateQue, questionsLength}: {
                     return <>
                         <Button2
                             key={idx + 1}
-                            id={"navigate-" + (idx).toString()}
+                            id={"nav-" + (idx).toString()}
                             title={(idx + 1).toString()}
                             className="h-10 w-10 m-1 border-2 border-black flex justify-center items-center rounded-sm hover:bg-neutral-200"
                             onClick={() => setNavigateQue(idx)}

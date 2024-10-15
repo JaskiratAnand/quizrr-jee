@@ -8,33 +8,83 @@ import MCQOptions from "./MCQOptions";
 import TrueOrFalseOptions from "./TrueOrFalseOptions";
 import { TextInput2 } from "./TextInput";
 import Image from "next/image";
-import { Button2 } from "@/components/ui/Button";
+import Button, { Button2 } from "@/components/ui/Button";
 import TestButtons from "./TestButtons";
 import NavigateButtons from "./NavigateButtons";
 
-const QuestionButtons = memo(({idx}: {
-    idx: number
+const QuestionButtons = memo(({idx, setNavigateQue, questionsLength}: {
+    idx: number,
+    setNavigateQue: (value: number) => void,
+    questionsLength: number
 }) => {
-
     return <>
         <div className="flex items-center row-span-1 px-4 p-2 border-t-2 border-black">
             <div>
                 <Button2
                     title={"SAVE & NEXT"} 
-                    className="rounded-none bg-green-600 text-white border-2 border-green-600 hover:bg-green-700"
-                    onClick={() => {console.log(idx)}}
+                    className="rounded-none bg-green-600 text-white border-2 border-green-600 hover:bg-green-700 disabled:bg-neutral-300 disabled:border-neutral-300 disabled:text-neutral-400" 
+                    onClick={() => {
+                        const navButton = document.getElementById(`nav-${idx}`);
+                        if (navButton) {
+                            navButton.style.backgroundColor = "#16a34a";
+                            navButton.style.color = "white";
+                            navButton.style.borderColor = "#16a34a";
+                        }
+                        if (idx < questionsLength - 1) {
+                            setNavigateQue(idx + 1)
+                        }
+                    }}
                 />
                 <Button2
                     title={"CLEAR"} 
-                    className="rounded-none bg-white text-black border-2 hover:bg-neutral-300" 
+                    className="rounded-none bg-white text-black border-2 hover:bg-neutral-300"
+                    onClick={() => {
+                        const navButton = document.getElementById(`nav-${idx}`);
+                        if (navButton) {
+                            navButton.style.backgroundColor = "white";
+                            navButton.style.color = "black";
+                            navButton.style.borderColor = "black";
+                            navButton.style.borderRadius = "0%";
+                        }
+                    }}
                 />
                 <Button2
                     title={"SAVE & MARK FOR REVIEW"} 
                     className="rounded-none bg-orange-500 text-white border-2 border-orange-500 hover:bg-orange-600" 
+                    onClick={() => {
+                        const navButton = document.getElementById(`nav-${idx}`);
+                        if (navButton) {
+                            navButton.style.backgroundColor = "#9333ea";
+                            navButton.style.color = "white";
+                            navButton.style.borderColor = "#9333ea";
+                            navButton.style.borderRadius = "50%";
+
+                            const existingIndicator = navButton.querySelector('.indicator');
+
+                            if (!existingIndicator) {
+                                const indicator = document.createElement('div');
+                                indicator.classList.add("absolute", "h-4", "w-4", "bg-green-600", "-bottom-1", "-right-1", "rounded-full");
+
+                                navButton.appendChild(indicator);
+                            }
+                        }
+                    }}
                 />
                 <Button2
                     title={"MARK FOR REVIEW & NEXT"} 
                     className="rounded-none bg-blue-600 text-white border-2 border-blue-600 hover:bg-blue-700" 
+                    onClick={() => {
+                        const navButton = document.getElementById(`nav-${idx}`);
+                        if (navButton) {
+                            navButton.style.backgroundColor = "#9333ea";
+                            navButton.style.color = "white";
+                            navButton.style.borderColor = "#9333ea";
+                            navButton.style.borderRadius = "50%";
+                        }
+                        if (idx < questionsLength - 1) {
+                            setNavigateQue(idx + 1)
+                        }
+                    }}
                 />
             </div>
         </div>
@@ -42,7 +92,7 @@ const QuestionButtons = memo(({idx}: {
 });
 QuestionButtons.displayName = "QuestionButtons";
 
-const Question = memo(({idx, question , handleOptionChange, answers}: {
+const Question = memo(({idx, question , handleOptionChange, answers, setNavigateQue, questionsLength}: {
     idx: number,
     question: {
         id: string;
@@ -53,18 +103,18 @@ const Question = memo(({idx, question , handleOptionChange, answers}: {
     },
     handleOptionChange: (questionId: string, answer: string) => void,
     answers: { [key: string]: string }
+    setNavigateQue: (value: number) => void
+    questionsLength: number
 })  => {
-
     return <>
         <div className="h-full flex flex-col row-span-6 overflow-scroll">
             <h1 className="text-2xl font-semibold p-4 pb-2">
-                Question {idx}:
+                Question {idx + 1}:
             </h1>
             <hr className="border-b-2 border-black" />
             <div className="h-full py-4 px-5 font-serif">
                 <p className="text-2xl pb-4">
                     {question.qtitle}
-
                 </p>
 
                 <div>
@@ -99,6 +149,11 @@ const Question = memo(({idx, question , handleOptionChange, answers}: {
                 </div>
             </div>
         </div>
+        <QuestionButtons 
+            idx={idx}
+            setNavigateQue={setNavigateQue}
+            questionsLength={questionsLength}
+        />
     </>
 });
 Question.displayName = "Question";
@@ -116,6 +171,8 @@ export default function JEETestView ({user, questions, testId}: {
     testId: string
 }) {
     const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+    const [navigateQue, setNavigateQue] = useState(0);
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const router = useRouter();
 
     const handleOptionChange = (questionId: string, answer: string) => {
@@ -140,7 +197,27 @@ export default function JEETestView ({user, questions, testId}: {
         router.push('/results');
     }, [router]);
 
-    const [navigateQue, setNavigateQue] = useState(0);
+    const setFullScreen = () => {
+        document.documentElement.requestFullscreen();
+    }
+
+    if (!isFullScreen) {
+        return (
+            <div className='flex flex-col items-center justify-center h-screen w-full'>
+                <div className="max-w-96 flex flex-col items-center justify-center gap-2 border border-neutral-200 p-5 rounded-xl bg-neutral-200">
+                    <h1 className="text-xl font-semibold text-blue-600">JEE Format Test</h1>
+                    <p className="py-2">The test requires fullscreen window to start</p>
+                    <Button 
+                        title={"Start Test"}
+                        onClick={() => {
+                            setFullScreen();
+                            setIsFullScreen(true);
+                        }}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return <>
         <header className="z-[100] border-b border-black">       
@@ -156,7 +233,7 @@ export default function JEETestView ({user, questions, testId}: {
                     </span>
                     <span className="grid grid-cols-2 text-lg font-medium whitespace-nowrap w-96">
                         <span className="col-span-1">
-                            Candidate Email: 
+                            Candidate Email:
                         </span>
                         <span className="col-span-1">
                             {user.email} 
@@ -169,14 +246,12 @@ export default function JEETestView ({user, questions, testId}: {
             <div className="grid grid-rows-10 col-span-8">
                 <Question
                     key={questions[navigateQue].id}
-                    idx={navigateQue + 1} 
+                    idx={navigateQue} 
                     question={questions[navigateQue]} 
                     handleOptionChange={handleOptionChange}
                     answers={answers}
-                />
-
-                <QuestionButtons 
-                    idx={navigateQue}
+                    setNavigateQue={setNavigateQue}
+                    questionsLength={questions.length}
                 />
 
                 <TestButtons

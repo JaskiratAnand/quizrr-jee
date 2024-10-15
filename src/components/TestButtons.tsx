@@ -13,13 +13,13 @@ const TestButtons = memo(({navigateQue, setNavigateQue, questionsLength, handleS
             <div>
                 <Button2
                     title={"<< BACK"} 
-                    className="rounded-none bg-white text-neutral-500 active:text-black border-2 border-neutral-500 active:border-black  hover:bg-neutral-300 disabled:bg-neutral-300 disabled:active:border-neutral-500 disabled:active:text-neutral-500" 
+                    className="rounded-none bg-white text-neutral-500 active:text-white border-2 border-neutral-500 active:border-black active:bg-[#282828]  hover:text-black hover:border-black hover:bg-[#d4d4d4] disabled:bg-neutral-300 disabled:active:border-neutral-500 disabled:active:text-neutral-500 disabled:hover:text-neutral-500 disabled:hover:border-neutral-500" 
                     onClick={() => setNavigateQue((navigateQue >= 0)? navigateQue - 1: 0)}
                     disabled={navigateQue === 0}
                 />
                 <Button2
                     title={"NEXT >>"} 
-                    className="rounded-none bg-white text-neutral-500 active:text-black border-2 border-neutral-500 active:border-black hover:bg-neutral-300 disabled:bg-neutral-300 disabled:active:border-neutral-500 disabled:active:text-neutral-500" 
+                    className="rounded-none bg-white text-neutral-500 active:text-white border-2 border-neutral-500 active:border-black active:bg-[#282828]  hover:text-black hover:border-black hover:bg-[#d4d4d4] disabled:bg-neutral-300 disabled:active:border-neutral-500 disabled:active:text-neutral-500 disabled:hover:text-neutral-500 disabled:hover:border-neutral-500" 
                     onClick={() => setNavigateQue((navigateQue < questionsLength)? navigateQue + 1: questionsLength - 1)}
                     disabled={navigateQue === questionsLength - 1}
                 />
@@ -27,7 +27,7 @@ const TestButtons = memo(({navigateQue, setNavigateQue, questionsLength, handleS
             <div>
                 <Button2
                     title={"SUBMIT"} 
-                    className="rounded-none bg-green-600 text-white border-2 border-green-600 hover:bg-green-700 hover:border-green-700" 
+                    className="rounded-none bg-green-600 text-white border-2 border-green-600 hover:bg-green-700 hover:border-green-700 active:bg-green-800 active:border-green-800" 
                     onClick={() => handleSubmit()}
                 />
             </div>

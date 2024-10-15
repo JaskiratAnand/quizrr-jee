@@ -8,8 +8,9 @@ const Card = memo(({
     description, 
     imageLink, 
     purchasedOn, 
-    buttonTitle, 
-    onClick
+    buttonTitle,
+    className, 
+    onClick,
 }: {
     title: string;
     description: string;
@@ -17,15 +18,16 @@ const Card = memo(({
     purchasedOn?: string;
     buttonTitle?: string;
     onClick?: () => void;
+    className?: string;
 }) => {
     return (
-        <div className="max-w-sm rounded-lg shadow">
+        <div className={`${className} max-w-sm rounded-lg shadow`}>
             <div>
                 {imageLink && <Image className="rounded-t-lg" src={imageLink} alt="" />}
             </div>
             <div className="p-5 pb-0">
                 <>
-                    <h1 className="mb-2 text-2xl font-bold text-blue-400">{title}</h1>
+                    <h1 className="mb-2 text-2xl font-bold text-blue-500">{title}</h1>
                     <p className="mb-3 font-normal">{description}</p>
                     {purchasedOn && <p className="mb-2 text-sm">Purchased On: {purchasedOn}</p>}
                 </>

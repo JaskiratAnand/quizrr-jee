@@ -47,7 +47,7 @@ export default async function StartJEETest({ params }: {
     const session = await getServerSession(authOptions);
     const name = session?.user?.name;
     const email = session?.user?.email;
-
+    
     const test = await gettest(params.id);
     if (!test) {
         return <div>Test not found</div>
