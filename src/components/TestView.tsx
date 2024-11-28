@@ -75,7 +75,6 @@ export default function TestView({ questions, testId }: {
     const router = useRouter();
     
     const handleOptionChange = (questionId: string, answer: string) => {
-        console.log("QuestionId:", questionId, "Answer:", answer);
         setAnswers(
             prevAnswers => ({
                 ...prevAnswers,
