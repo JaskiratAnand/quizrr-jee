@@ -151,11 +151,13 @@ const Question = memo(({idx, question , handleOptionChange, answers, setNavigate
                         <MCQOptions 
                             options={question.options}
                             selectedOption={answers[question.id] || ""}
+                            questionId={question.id}
                             handleOptionChange={(answer: string) => handleOptionChange(question.id, answer)} 
                         /> :
                         (question.type === "TrueOrFalse") ?
                             <TrueOrFalseOptions
                                 selectedOption={answers[question.id] || ""}
+                                questionId={question.id}
                                 handleOptionChange={(answer: string) => handleOptionChange(question.id, answer)} 
                             /> :
                             <TextInput2

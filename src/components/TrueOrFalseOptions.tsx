@@ -2,8 +2,9 @@
 
 import { memo } from "react";
 
-const TrueOrFalseOptions = memo(({ selectedOption, handleOptionChange }: {
+const TrueOrFalseOptions = memo(({ selectedOption, questionId, handleOptionChange }: {
     selectedOption: string | null,
+    questionId: string,
     handleOptionChange: (option: string) => void
 }) => {
     return <>
@@ -13,7 +14,7 @@ const TrueOrFalseOptions = memo(({ selectedOption, handleOptionChange }: {
                     id="true" 
                     type="radio" 
                     value="true" 
-                    name="default-radio" 
+                    name={questionId}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                     checked={selectedOption === "true"}
                     onChange={() => handleOptionChange("true")} 

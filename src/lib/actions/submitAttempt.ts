@@ -23,7 +23,10 @@ export async function submitAttempt (
             }
         });
 
-        const questions = await prisma.question.findMany({
+        const questions: {
+            id: string,
+            correctAns: string
+        }[] = await prisma.question.findMany({
             where: {
                 testId: testId
             },

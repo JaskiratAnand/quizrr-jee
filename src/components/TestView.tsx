@@ -40,11 +40,13 @@ const Question = memo(({idx, question , handleOptionChange, answers}: {
                     <MCQOptions 
                         options={question.options}
                         selectedOption={answers[question.id] || ""}
+                        questionId={question.id}
                         handleOptionChange={(answer: string) => handleOptionChange(question.id, answer)} 
                     /> :
                     (question.type === "TrueOrFalse") ?
                         <TrueOrFalseOptions
                             selectedOption={answers[question.id] || ""}
+                            questionId={question.id}
                             handleOptionChange={(answer: string) => handleOptionChange(question.id, answer)} 
                         /> :
                         <TextInput 
@@ -73,6 +75,7 @@ export default function TestView({ questions, testId }: {
     const router = useRouter();
     
     const handleOptionChange = (questionId: string, answer: string) => {
+        console.log("QuestionId:", questionId, "Answer:", answer);
         setAnswers(
             prevAnswers => ({
                 ...prevAnswers,

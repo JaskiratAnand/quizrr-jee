@@ -16,7 +16,7 @@ interface PurchasedTestSeries {
     }[]
 }
 
-interface Purchases {
+interface Purchase {
     id: string,
     title: string,
     description: string,
@@ -59,7 +59,7 @@ const getPurchasedTestSeries = async () => {
         return [];
     }
 
-    const purchases: Purchases[] = purchasedSeries?.purchases.map(p => ({
+    const purchases: Purchase[] = purchasedSeries?.purchases.map(p => ({
         id: p.testSeries.id,
         title: p.testSeries.title,
         description: p.testSeries.description,
@@ -70,7 +70,11 @@ const getPurchasedTestSeries = async () => {
 }
 
 const getTestSeries = async () => {
-    const testSeries = await prisma.testSeries.findMany();
+    const testSeries: {
+        id: string,
+        title: string,
+        description: string
+    }[] = await prisma.testSeries.findMany();
     return testSeries;
 }
 
